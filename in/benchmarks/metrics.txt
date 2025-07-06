@@ -1,0 +1,70 @@
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 22
+# Ciclos: 63
+# CPI Médio: 2.86364
+# t_CPU: 126 ns
+# MIPS: 174.603 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[-18983920]: -nan%
+
+
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 302
+# Ciclos: 807
+# CPI Médio: 2.67219
+# t_CPU: 1614 ns
+# MIPS: 187.113 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[516026144]: -nan%
+
+
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 61
+# Ciclos: 116
+# CPI Médio: 1.90164
+# t_CPU: 232 ns
+# MIPS: 262.931 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[1747882704]: -nan%
+
+
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 22
+# Ciclos: 76
+# CPI Médio: 3.45455
+# t_CPU: 152 ns
+# MIPS: 144.737 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[-1388571680]: -nan%
+
+
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 302
+# Ciclos: 508
+# CPI Médio: 1.68212
+# t_CPU: 1016 ns
+# MIPS: 297.244 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[-540833264]: -nan%
+
+
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 61
+# Ciclos: 141
+# CPI Médio: 2.31148
+# t_CPU: 282 ns
+# MIPS: 216.312 milhões de instruções por segundo
+# Acessos a memoria: 0
+# Preditor: 2 bits
+# Taxa de sucesso - BPB[599541552]: -nan%

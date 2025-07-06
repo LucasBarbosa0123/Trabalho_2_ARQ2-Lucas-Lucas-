@@ -13,6 +13,7 @@ bool branch_predictor::predict()
     c_predictions++;
     return state&(1<<(n_bits-1));
 }
+
 void branch_predictor::update_state(bool taken, bool hit)
 {
     c_hits += hit;

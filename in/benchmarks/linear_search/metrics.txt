@@ -1,0 +1,9 @@
+MÉTRICAS:
+# Frequência CPU: 500 Mhz
+# Total de Instruções Executadas: 2504
+# Ciclos: 6515
+# CPI Médio: 2.60184
+# t_CPU: 13030 ns
+# MIPS: 192.172 milhões de instruções por segundo
+# Acessos a memoria: 500
+# Preditor: 2 bits

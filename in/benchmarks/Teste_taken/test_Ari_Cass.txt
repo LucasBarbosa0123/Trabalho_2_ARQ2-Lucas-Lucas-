@@ -1,0 +1,10 @@
+//        DADDI R2, R0, 400     # R2 = 400
+//loop:   BNE R2, R0, corpo     # Desvio tomado 399 vezes
+//        J fim                 # Quando R2 == 0
+//corpo:  DADDI R2, R2, -1
+//        J loop
+//fim:
+DADDI R2,R0,10
+DADDI R2,R2,-1
+BNE R2,R0,-1
+DADDI R3,R0,100

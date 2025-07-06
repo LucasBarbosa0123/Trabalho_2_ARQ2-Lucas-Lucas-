@@ -122,6 +122,43 @@ int sc_main(int argc, char *argv[])
             spec = true;
             mode = 1;
             spec_sub->checked(1, false);
+            spec_sub->checked(2, false);
+            spec_sub->checked(3, false);
+        }
+        else{
+            spec = false;
+            mode = 0;
+        }
+
+        set_spec(plc,spec);
+    });
+    //Modo de especulaçao taken
+    spec_sub->append("Static Taken", [&](menu::item_proxy &ip)
+    {
+        if(ip.checked()){
+            spec = true;
+            mode = 2;
+            spec_sub->checked(0, false);
+            spec_sub->checked(2, false);
+            spec_sub->checked(3, false);
+            printf("FOIIIII");
+        }
+        else{
+            spec = false;
+            mode = 0;
+        }
+
+        set_spec(plc,spec);
+    });
+    spec_sub->append("Static Not Taken", [&](menu::item_proxy &ip)
+    {
+        if(ip.checked()){
+            spec = true;
+            mode = 3;
+            spec_sub->checked(0, false);
+            spec_sub->checked(1, false);
+            spec_sub->checked(3, false);
+            printf("AAAAAAAAA");
         }
         else{
             spec = false;
@@ -135,8 +172,10 @@ int sc_main(int argc, char *argv[])
     {
         if(ip.checked()){
             spec = true;
-            mode = 2;
+            mode = 4;
             spec_sub->checked(0, false);
+            spec_sub->checked(1, false);
+            spec_sub->checked(2, false);
         }
         else{
             spec = false;
@@ -147,6 +186,8 @@ int sc_main(int argc, char *argv[])
     });
     spec_sub->check_style(0,menu::checks::highlight);
     spec_sub->check_style(1,menu::checks::highlight);
+    spec_sub->check_style(2,menu::checks::highlight);
+    spec_sub->check_style(3,menu::checks::highlight);
 
     op.append("Modificar valores...");
     // novo submenu para escolha do tamanho do bpb e do preditor
@@ -719,6 +760,34 @@ int sc_main(int argc, char *argv[])
             }
     });
 
+    bench_sub->append("Teste Taken",[&](menu::item_proxy &ip){
+        string path = base_path + "/in/benchmarks/Teste_taken/test_Ari_Cass.txt";
+        bench_name = "test_Ari_Cass";
+        inFile.open(path);
+        if(!add_instructions(inFile,instruction_queue,instruct))
+            show_message("Arquivo inválido","Não foi possível abrir o arquivo");
+        else
+            fila = true;
+        
+        path = base_path + "/in/benchmarks/Teste_taken/regs.txt";
+        inFile.open(path);
+            if(!inFile.is_open())
+                show_message("Arquivo inválido","Não foi possível abrir o arquivo!");
+            else
+            {
+                auto reg_gui = reg.at(0);
+                int value,i = 0;
+                while(inFile >> value && i < 32)
+                {
+                    reg_gui.at(i).text(1,std::to_string(value));
+                    i++;
+                }
+                for(; i < 32 ; i++)
+                    reg_gui.at(i).text(1,"0");
+                inFile.close();
+            }
+    });
+
     vector<string> columns = {"#","Name","Busy","Op","Vj","Vk","Qj","Qk","A"}; 
     for(unsigned int i = 0 ; i < columns.size() ; i++)
     {
@@ -915,10 +984,15 @@ int sc_main(int argc, char *argv[])
                 bench_sub->enabled(i,false);
             if(spec){
                 // Flag mode setada pela escolha no menu
-                if(mode == 1)
+                if(mode == 1){
                     top1.rob_mode(n_bits,nadd,nmul,nls,instruct_time,instruction_queue,table,memory,reg,instruct,clock_count,rob);
-                else if(mode == 2)
+                }else if(mode == 2){
+                    top1.rob_mode_taken(n_bits,nadd,nmul,nls,instruct_time,instruction_queue,table,memory,reg,instruct,clock_count,rob);
+                }else if(mode == 3){
+                    top1.rob_mode_not_taken(n_bits,nadd,nmul,nls,instruct_time,instruction_queue,table,memory,reg,instruct,clock_count,rob);
+                }else if(mode == 4){
                     top1.rob_mode_bpb(n_bits, bpb_size, nadd,nmul,nls,instruct_time,instruction_queue,table,memory,reg,instruct,clock_count,rob);
+                }
             }
             else
                 top1.simple_mode(nadd,nmul,nls,instruct_time,instruction_queue,table,memory,reg,instruct,clock_count);
@@ -940,11 +1014,14 @@ int sc_main(int argc, char *argv[])
 
     run_all.events().click([&]{
         // enquanto queue e rob nao estao vazios, roda ate o fim
-        while(!(top1.get_queue().queue_is_empty() && top1.get_rob().rob_is_empty())){
+        while(1){
+            if(spec && top1.get_rob_queue().queue_is_empty() && top1.get_rob().rob_is_empty())
+                break;
+            else if (!spec && top1.get_queue().queue_is_empty())
+                break;
             if(sc_is_running())
                 sc_start();
         }
-
         top1.metrics(cpu_freq, mode, bench_name, n_bits);
     });
 
